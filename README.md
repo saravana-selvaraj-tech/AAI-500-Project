@@ -1,2 +1,256 @@
-# AAI-500-Project
+# Household Power Consumption Analysis
+
+## Project Overview
+
+This project analyzes household electric power consumption data to identify patterns, perform preprocessing, and build predictive models for energy consumption forecasting. The analysis covers almost 4 years of minute-level data from a single household (Dec 2006 - Nov 2010).
+
+## Dataset
+
+**Individual Household Electric Power Consumption Dataset**
+- **Records**: ~2 million measurements
+- **Frequency**: 1-minute sampling rate
+- **Features**: 9 variables including:
+  - Global active/reactive power
+  - Voltage and current intensity
+  - Sub-metering for 3 different zones (Kitchen, Laundry, Water Heater & AC)
+
+## Project Structure
+
+```
+AAI-500-Project/
+├── data/
+│   ├── raw/                      # Original dataset
+│   │   └── household_power_consumption.txt
+│   └── processed/                # Cleaned and processed data
+│       ├── df_loaded.pkl
+│       ├── df_cleaned.pkl
+│       ├── df_features.pkl
+│       └── feature_list.csv
+├── notebooks/
+│   ├── 00_main.ipynb            # Main orchestration notebook
+│   ├── 01_data_loading.ipynb    # Data loading and initial exploration
+│   ├── 02_data_cleaning.ipynb   # Data cleaning and preprocessing
+│   ├── 03_exploratory_analysis.ipynb  # EDA with visualizations
+│   ├── 04_feature_engineering.ipynb   # Advanced feature creation
+│   ├── 05_modeling_preparation.ipynb  # Baseline modeling
+│   └── 06_conclusions_and_recommendations.ipynb  # Conclusions & recommendations
+├── outputs/
+│   ├── figures/                 # Generated visualizations (20+ plots)
+│   ├── baseline_results.csv     # Model performance metrics
+│   ├── feature_importance.csv   # Feature importance rankings
+│   ├── rf_baseline_model.pkl    # Trained Random Forest model
+│   └── scaler.pkl              # Feature scaler
+├── src/                         # Python modules (future development)
+├── reports/                     # Analysis reports
+│   ├── PROJECT_SUMMARY.md       # Complete project summary
+│   └── REPORT_STRUCTURE_GUIDE.md # Guide for creating technical report
+├── requirements.txt             # Python dependencies
+├── LICENSE
+└── README.md                    # This file
+```
+
+## Installation
+
+### Prerequisites
+- Python 3.8 or higher
+- Jupyter Notebook or JupyterLab
+
+### Setup
+
+1. Clone the repository:
+```bash
+git clone <repository-url>
+cd AAI-500-Project
+```
+
+2. Create a virtual environment (recommended):
+```bash
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+```
+
+3. Install dependencies:
+```bash
+pip install -r requirements.txt
+```
+
+4. Launch Jupyter:
+```bash
+jupyter notebook
+```
+
+## Usage
+
+### Option 1: Run Complete Pipeline
+Open and execute `notebooks/00_main.ipynb` - this provides an overview and guides you through the entire analysis.
+
+### Option 2: Run Individual Notebooks
+Execute notebooks in sequence:
+
+1. **01_data_loading.ipynb** - Load and examine the dataset
+   - Initial data exploration
+   - Missing value detection
+   - Date range verification
+   
+2. **02_data_cleaning.ipynb** - Clean and preprocess data
+   - Handle missing values (imputation/removal)
+   - Remove duplicates
+   - Detect and treat outliers
+   - Create basic time features
+   
+3. **03_exploratory_analysis.ipynb** - Perform EDA
+   - Statistical analysis
+   - Statistical hypothesis testing (t-tests, chi-squared)
+   - Confidence intervals (95% CI)
+   - Distribution visualization
+   - Temporal pattern discovery
+   - Correlation analysis
+   - Sub-metering comparison
+   - Anomaly detection
+   
+4. **04_feature_engineering.ipynb** - Create advanced features
+   - Lag features (1 min, 1 hour, 1 day, 1 week)
+   - Rolling statistics (mean, std, min, max)
+   - Rate of change features
+   - Cyclical encoding (sin/cos)
+   - Interaction features
+   
+5. **05_modeling_preparation.ipynb** - Build baseline models
+   - Train/validation/test split (70/15/15)
+   - Feature scaling
+   - Baseline models (Naive, Mean, Linear Regression, Random Forest)
+   - Feature importance analysis
+   - Model evaluation and comparison
+
+## Key Features
+
+### Data Processing
+- Comprehensive missing value handling
+- Outlier detection using IQR and winsorization
+- Duplicate removal
+- Time-based feature extraction
+
+### Feature Engineering
+- **Lag Features**: Capture temporal dependencies
+- **Rolling Statistics**: Trend and volatility measures
+- **Rate of Change**: Detect rapid consumption changes
+- **Cyclical Encoding**: Preserve time cyclicity
+- **Interaction Features**: Power factor, unmetered consumption
+
+### Visualizations
+The project generates 25+ plots including:
+- Distribution plots
+- Temporal patterns (hourly, daily, monthly, seasonal)
+- Statistical test results (confidence intervals, error bars)
+- Correlation heatmaps
+- Sub-metering comparisons
+- Feature importance charts
+- Model performance comparisons
+- Prediction vs actual plots
+- Residual analysis
+
+### Modeling
+- Multiple baseline models for comparison
+- Comprehensive evaluation metrics (MAE, RMSE, R², MAPE)
+- Feature importance ranking
+- Residual analysis
+- Time series cross-validation ready
+
+## Results
+
+### Key Insights
+- **Peak consumption**: Evening hours (6-9 PM)
+- **Low consumption**: Early morning (2-5 AM)
+- **Seasonal variation**: Winter months show higher consumption
+- **Weekend vs Weekday**: Weekend consumption is **statistically significantly higher** (p < 0.000001)
+  - Weekend mean: 1.22 kW (95% CI: [1.22, 1.22])
+  - Weekday mean: 1.03 kW (95% CI: [1.03, 1.03])
+  - Difference: 0.19 kW
+- **Temporal Independence**: Season and Time of Day are independent (χ² test, p = 0.999)
+- **Sub-metering**: Kitchen and Water Heater/AC are major consumers
+- **Unmetered power**: Significant portion not captured by sub-meters
+
+### Model Performance
+- Baseline models established (Naive, Mean, Linear Regression)
+- Random Forest shows best performance among baselines
+- Further improvements possible with advanced techniques
+
+## Methodology
+
+### Techniques Implemented
+- Time series preprocessing
+- Statistical imputation
+- Statistical hypothesis testing
+  - Independent t-tests (weekend vs weekday, seasonal comparisons)
+  - Chi-squared tests for independence
+  - 95% confidence intervals
+  - Bonferroni correction for multiple comparisons
+- Outlier treatment (winsorization)
+- Feature engineering (domain-knowledge driven)
+- Feature scaling (StandardScaler)
+- Multiple baseline models
+- Comprehensive evaluation framework
+
+### Evaluation Metrics
+- **MAE** (Mean Absolute Error)
+- **RMSE** (Root Mean Squared Error)
+- **R²** (Coefficient of Determination)
+- **MAPE** (Mean Absolute Percentage Error)
+
+## Future Enhancements
+
+### Advanced Modeling
+- Gradient Boosting (XGBoost, LightGBM)
+- LSTM/GRU networks for sequence modeling
+- ARIMA/Prophet for time series forecasting
+- Ensemble methods
+
+### Feature Selection
+- Recursive Feature Elimination (RFE)
+- LASSO regularization
+- SHAP value analysis
+
+### Deployment
+- Model packaging for production
+- Real-time prediction API
+- Anomaly detection system
+- Energy optimization recommendations
+
+## Contributing
+
+## Technical Report
+
+To generate a technical report from these notebooks, see `reports/REPORT_STRUCTURE_GUIDE.md` for detailed instructions on:
+- Mapping notebooks to report sections
+- Exporting notebooks to PDF/HTML
+- Report structure and formatting
+- Creating the appendix
+
+The report should include:
+1. Introduction
+2. Data Cleaning/Preparation
+3. Exploratory Data Analysis
+4. Model Selection
+5. Model Analysis
+6. Conclusion and Recommendations
+7. Appendix (exported notebooks)
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is licensed under the terms specified in the LICENSE file.
+
+## Acknowledgments
+
+- Dataset source: UCI Machine Learning Repository
+- Individual Household Electric Power Consumption Dataset
+
+## Contact
+
+For questions or suggestions, please open an issue in the repository.
+
+---
+
+**Project Status**: Preprocessing Complete | EDA Complete | Baseline Models Complete
 USD - MS - Course - AA1-500 subject - Project work
