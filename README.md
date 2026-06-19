@@ -31,8 +31,8 @@ AAI-500-Project/
 │   ├── 01_data_loading.ipynb    # Data loading and initial exploration
 │   ├── 02_data_cleaning.ipynb   # Data cleaning and preprocessing
 │   ├── 03_exploratory_analysis.ipynb  # EDA with visualizations
-│   ├── 04_feature_engineering.ipynb   # Advanced feature creation
-│   ├── 05_modeling_preparation.ipynb  # Baseline modeling
+│   ├── 04_bayesian_network_model_inference.ipynb   # Bayesian Model based evaluation and inference
+│   ├── 05_linear_regression_model_analysis.ipynb # Regression model based prediction and best model selection
 │   └── 06_conclusions_and_recommendations.ipynb  # Conclusions & recommendations
 ├── outputs/
 │   ├── figures/                 # Generated visualizations (20+ plots)
@@ -108,19 +108,25 @@ Execute notebooks in sequence:
    - Sub-metering comparison
    - Anomaly detection
    
-4. **04_feature_engineering.ipynb** - Create advanced features
-   - Lag features (1 min, 1 hour, 1 day, 1 week)
-   - Rolling statistics (mean, std, min, max)
-   - Rate of change features
-   - Cyclical encoding (sin/cos)
-   - Interaction features
+4. **04_bayesian_network_model_inference.ipynb** - Inferences
+   - Dataset preparation and remove highly correlated columns
+   - Data variables discretization
+   - Train/test dataset split - 70/30
+   - Evaluating using TreeSearch and HillClimbSearch Bayesian Network modesl
+   - Estimation and model fitting
+   - Creating CPDs and model validity checking 
+   - Inference from both models based estimations
+   - Compute BIC and K2 score for better model determination
    
-5. **05_modeling_preparation.ipynb** - Build baseline models
-   - Train/validation/test split (70/15/15)
-   - Feature scaling
-   - Baseline models (Naive, Mean, Linear Regression, Random Forest)
-   - Feature importance analysis
-   - Model evaluation and comparison
+5. **05_linear_regression_model_analysis.ipynb** - Build baseline models and selection
+   - Identify dependent and independent variables
+   - Find out high co-related independent varaibles and remove them (if any) before analysis
+   - Perform Multi-Linear regression analysis for different models 
+     - Model1 : Electrical Variables
+     - Model 2 : Electrical + Time Variables
+     - Model 3 : Electrical + Time + Season Variables
+     - Target: Global_active_power
+  - Select the model that performs better on results obtained from all model analysis
 
 ## Key Features
 
@@ -129,13 +135,6 @@ Execute notebooks in sequence:
 - Outlier detection using IQR and winsorization
 - Duplicate removal
 - Time-based feature extraction
-
-### Feature Engineering
-- **Lag Features**: Capture temporal dependencies
-- **Rolling Statistics**: Trend and volatility measures
-- **Rate of Change**: Detect rapid consumption changes
-- **Cyclical Encoding**: Preserve time cyclicity
-- **Interaction Features**: Power factor, unmetered consumption
 
 ### Visualizations
 The project generates 25+ plots including:
@@ -171,8 +170,8 @@ The project generates 25+ plots including:
 - **Unmetered power**: Significant portion not captured by sub-meters
 
 ### Model Performance
-- Baseline models established (Naive, Mean, Linear Regression)
-- Random Forest shows best performance among baselines
+- Bayesian Network model based inferences - Using TreeSearch and ClimbSearch techniques
+- Baseline models established Multi Linear Regressions
 - Further improvements possible with advanced techniques
 
 ## Methodology
@@ -190,12 +189,6 @@ The project generates 25+ plots including:
 - Feature scaling (StandardScaler)
 - Multiple baseline models
 - Comprehensive evaluation framework
-
-### Evaluation Metrics
-- **MAE** (Mean Absolute Error)
-- **RMSE** (Root Mean Squared Error)
-- **R²** (Coefficient of Determination)
-- **MAPE** (Mean Absolute Percentage Error)
 
 ## Future Enhancements
 

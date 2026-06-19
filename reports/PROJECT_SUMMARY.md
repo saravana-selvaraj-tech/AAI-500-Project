@@ -11,8 +11,9 @@ This project provides a comprehensive analysis pipeline for household electric p
 - **01_data_loading.ipynb**: Data loading and initial exploration
 - **02_data_cleaning.ipynb**: Data cleaning and preprocessing
 - **03_exploratory_analysis.ipynb**: Comprehensive EDA with visualizations
-- **04_feature_engineering.ipynb**: Advanced feature creation
-- **05_modeling_preparation.ipynb**: Baseline modeling and evaluation
+- **04_bayesian_network_model_inference.ipynb**: Bayesian Model based evaluation and inference
+- **05_linear_regression_model_analysis.ipynb**: Regression model based prediction and best model selection
+- **06_conclusions_and_recommendations.ipynb**: Conclusions & recommendations
 
 ### 2. Project Structure
 ```
@@ -63,36 +64,30 @@ AAI-500-Project/
 - Anomaly detection using Z-score
 - Generates 10+ plots saved to `outputs/figures/`
 
-#### Stage 4: Feature Engineering
-- **Lag Features**: 1-min, 1-hour, 1-day, 1-week lags
-- **Rolling Statistics**: Mean, std, min, max for multiple windows (1hr, 6hr, 1day)
-- **Rate of Change**: First difference and percentage change
-- **Cyclical Features**: Sin/cos transformations for hour, day, month, day_of_year
-- **Interaction Features**:
-  - Total sub-metering
-  - Unmetered power
-  - Power factor
-  - Intensity per voltage
-  - Weekend-hour interaction
-- Creates 50+ engineered features
-- Visualizes feature relationships and correlations
-- Saves: `df_features.pkl` and `feature_list.csv`
+#### Stage 4: Bayesian Network model based inferences
+Prepare data for machine learning models and establish baseline performance:
+- Dataset preparation and remove highly correlated columns
+- Data variables discretization
+- Train/test dataset split - 70/30
+- Evaluating using TreeSearch and HillClimbSearch Bayesian Network modesl
+- Estimation and model fitting
+- Creating CPDs and model validity checking 
+- Inference from both models based estimations
+- Compute BIC and K2 score for better model determination
 
-#### Stage 5: Modeling Preparation
-- **Data Split**: 70% train, 15% validation, 15% test (temporal order preserved)
-- **Feature Scaling**: StandardScaler normalization
-- **Baseline Models**:
-  1. Naive forecast (previous value)
-  2. Mean forecast
-  3. Linear Regression
-  4. Random Forest (50 estimators)
-- **Evaluation Metrics**: MAE, RMSE, R², MAPE
-- **Feature Importance**: Analysis using Random Forest
-- **Visualizations**:
-  - Model performance comparison
-  - Prediction vs actual plots
-  - Residual analysis
-- Saves: models, scaler, results, and feature importance
+#### Stage 5: Linear regression model based analysis for prediction and best model selection
+- Identify dependent and independent variables
+- Find out high correlated independent varaibles and remove them (if any) before analysis
+- Perform Multi-Linear regression analysis for different models 
+  - Model1 : Electrical Variables
+  - Model 2 : Electrical + Time Variables
+  - Model 3 : Electrical + Time + Season Variables
+  - Target: Global_active_power
+- Saves every model CPDs - correlation chart
+  - regression-Model-1_Electrical.png
+  - regression-Model-2-Electrical + Time.png
+  - regression-Model-3-Electrical + Time + Season.png
+- Select the model that performs better on results obtained from all model analysis
 
 ### 4. Visualizations Generated (20+ plots)
 
@@ -126,17 +121,9 @@ AAI-500-Project/
    - Rolling average time series
    - Anomaly visualization
 
-7. **Feature Engineering**:
-   - Rolling features visualization
-   - Rate of change plots
-   - Cyclical encoding visualization
-   - Interaction features
-
-8. **Modeling**:
-   - Baseline comparison (MAE, RMSE, R², MAPE)
+7. **Modeling**:
    - Feature importance charts (top 20 and by category)
-   - Predictions comparison (Linear Reg and RF)
-   - Residual analysis (distribution, scatter, Q-Q plot)
+   - Predictions comparison (Linear Reg)
 
 ### 5. Key Findings
 
@@ -147,22 +134,27 @@ AAI-500-Project/
 - Significant unmetered power consumption
 
 #### Consumption Patterns:
-- **Peak hours**: Evening (6-9 PM)
-- **Low hours**: Early morning (2-5 AM)
-- **Weekday > Weekend**: Higher consumption on weekdays
-- **Seasonal**: Winter shows higher consumption
-- **Sub-metering**: Kitchen and Water Heater/AC are major consumers
+- **Bayesian Network model inferences** 
+  - ***Prominent Inferences***
+    - Global power usage is higher on weekends compared to weekdays
+    - Global power usage is higher on Evenings compared to any other times of the day
+    - Global power usage is higher during Winters, where as during Summers, Global reactive power usage is higher.
+    - Global reactive power usage also tends to be higher on weekends when compared to weekdays.
+  - ***Evaluation*** 
+    - Using deduced BIC, K2 scores, and accuracy - Inferred **HillClimbSearch** performs better than TreeSearch technique.
 
-#### Feature Importance:
-- Lag features (esp. lag_1 and lag_1440) most predictive
-- Rolling statistics capture important trends
-- Time-of-day features provide cyclical patterns
-- Sub-metering contributes to accuracy
-
-#### Model Performance:
-- Random Forest outperforms simple baselines significantly
-- High R² score demonstrates strong predictive capability
-- Residuals show reasonable distribution
+#### Model evaluation and selection:
+- **Linear regression model Analysis**
+  - **Modeling**
+	- ***Model 1*** - Used electrical measurements only
+	- ***Model 2*** - Incorporated temporal variables - time_of_day and weekend/weekday
+	- ***Model 3*** - Additionally included seasonal indicators.
+  - **Result**
+    - All three models achieved extremely high predictive performance, with R² values exceeding 0.998, indicating that more than 99.8% of the variation in Global_active_power was explained by the predictors.
+	- The inclusion of temporal variables produced a modest improvement in predictive accuracy, suggesting that daily and weekly household usage patterns contribute additional explanatory power.
+	- The addition of seasonal indicators further improved model performance, indicating that seasonal consumption patterns also influence household electricity usage.
+	- However, the incremental improvements in R², RMSE, and MAE were relatively small. 
+	- The electrical measurements are the dominant determinants of active power consumption, while temporal and seasonal variables provide only supplementary predictive information.  
 - Further improvements possible with advanced techniques
 
 ### 6. Technical Highlights
