@@ -1,18 +1,14 @@
-# Household Power Consumption Analysis
+# Project Title:
+Predicting Household Power Consumption Analysis for Smarter Decisions
+
+### Project Status:
+Preprocessing Complete | EDA Complete | Baseline Models Complete
+USD - MS - Course - AA1-500 subject - Project work
 
 ## Project Overview
 
-This project analyzes household electric power consumption data to identify patterns, perform preprocessing, and build predictive models for energy consumption forecasting. The analysis covers almost 4 years of minute-level data from a single household (Dec 2006 - Nov 2010).
-
-## Dataset
-
-**Individual Household Electric Power Consumption Dataset**
-- **Records**: ~2 million measurements
-- **Frequency**: 1-minute sampling rate
-- **Features**: 9 variables including:
-  - Global active/reactive power
-  - Voltage and current intensity
-  - Sub-metering for 3 different zones (Kitchen, Laundry, Water Heater & AC)
+This project is a part of the AAI-500 course in the Applied Artificial Intelligence Program at the University of San Diego (USD). 
+It analyzes household electric power consumption data to identify patterns, perform preprocessing, and build predictive models for energy consumption forecasting. The analysis covers almost 4 years of minute-level data from a single household (Dec 2006 - Nov 2010).
 
 ## Project Structure
 
@@ -128,6 +124,18 @@ Execute notebooks in sequence:
      - Target: Global_active_power
   - Select the model that performs better on results obtained from all model analysis
 
+## Dataset
+
+**Individual Household Electric Power Consumption Dataset**
+- **Records**: ~2 million measurements
+- **Frequency**: 1-minute sampling rate
+- **Features**: 9 variables including:
+  - Global active/reactive power
+  - Voltage and current intensity
+  - Sub-metering for 3 different zones (Kitchen, Laundry, Water Heater & AC)
+- **Size of dataset**: 120 MB
+- **Dataset source**: UCI Machine Learning Repository
+
 ## Key Features
 
 ### Data Processing
@@ -155,6 +163,22 @@ The project generates 25+ plots including:
 - Residual analysis
 - Time series cross-validation ready
 
+## Methodology
+
+### Techniques Implemented
+- Time series preprocessing
+- Statistical imputation
+- Statistical hypothesis testing
+  - Independent t-tests (weekend vs weekday, seasonal comparisons)
+  - Chi-squared tests for independence
+  - 95% confidence intervals
+  - Bonferroni correction for multiple comparisons
+- Outlier treatment (winsorization)
+- Feature engineering (domain-knowledge driven)
+- Feature scaling (StandardScaler)
+- Multiple baseline models
+- Comprehensive evaluation framework
+
 ## Results
 
 ### Key Insights
@@ -173,22 +197,6 @@ The project generates 25+ plots including:
 - Bayesian Network model based inferences - Using TreeSearch and ClimbSearch techniques
 - Baseline models established Multi Linear Regressions
 - Further improvements possible with advanced techniques
-
-## Methodology
-
-### Techniques Implemented
-- Time series preprocessing
-- Statistical imputation
-- Statistical hypothesis testing
-  - Independent t-tests (weekend vs weekday, seasonal comparisons)
-  - Chi-squared tests for independence
-  - 95% confidence intervals
-  - Bonferroni correction for multiple comparisons
-- Outlier treatment (winsorization)
-- Feature engineering (domain-knowledge driven)
-- Feature scaling (StandardScaler)
-- Multiple baseline models
-- Comprehensive evaluation framework
 
 ## Future Enhancements
 
@@ -209,24 +217,9 @@ The project generates 25+ plots including:
 - Anomaly detection system
 - Energy optimization recommendations
 
-## Contributing
-
-## Technical Report
-
-To generate a technical report from these notebooks, see `reports/REPORT_STRUCTURE_GUIDE.md` for detailed instructions on:
-- Mapping notebooks to report sections
-- Exporting notebooks to PDF/HTML
-- Report structure and formatting
-- Creating the appendix
-
-The report should include:
-1. Introduction
-2. Data Cleaning/Preparation
-3. Exploratory Data Analysis
-4. Model Selection
-5. Model Analysis
-6. Conclusion and Recommendations
-7. Appendix (exported notebooks)
+## Contributors
+- Vivek Shivaram
+- Saravana S
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
@@ -238,6 +231,7 @@ This project is licensed under the terms specified in the LICENSE file.
 
 - Dataset source: UCI Machine Learning Repository
 - Individual Household Electric Power Consumption Dataset
+- Anuj S for the support
 
 ## Contact
 
@@ -245,5 +239,4 @@ For questions or suggestions, please open an issue in the repository.
 
 ---
 
-**Project Status**: Preprocessing Complete | EDA Complete | Baseline Models Complete
-USD - MS - Course - AA1-500 subject - Project work
+
